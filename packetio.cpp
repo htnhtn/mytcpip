@@ -58,7 +58,7 @@ DWORD WINAPI ThreadProc1(__in  LPVOID lpParameter)
 void*thread(void*id)
 {
 	pcap_loop(
-		devices[(int)(intptr_p)id].p,
+		devices[(int)(intptr_t)id].p,
 		0,
 		packet_handler,
 		(u_char*)id);
