@@ -1,4 +1,4 @@
-#define HAVE_REMOTE
+//#define HAVE_REMOTE
 #include<pcap.h>
 char err[PCAP_ERRBUF_SIZE];
 
@@ -12,10 +12,10 @@ int main()
 	for(pcap_if_t*i=devs;i;i=i->next)
 		printf("%s\t%s\n",i->name,i->description);
 
-	if(!pcap_init(PCAP_CHAR_ENC_UTF_8,err))
-		return puts(err);
+	// if(!pcap_init(PCAP_CHAR_ENC_UTF_8,err))
+	// 	return puts(err);
 
-	char*src=devs->next->name;
+	char*src=devs->next->next->next->name;
 	pcap_t*p=pcap_create(src,err);
 	if(!p)return puts(err);
 
@@ -25,8 +25,8 @@ int main()
 	if(errno=pcap_activate(p))
 		return pcap_close(p),printf("error! pcap_activate %d.\n",errno);
 
-	pcap_t*fp=pcap_open_offline("savefile",err);
-	if(!fp)return puts(err);
+	// pcap_t*fp=pcap_open_offline("savefile",err);
+	// if(!fp)return puts(err);
 
 	int*t;
 	printf("%d link-layer header types.\n",pcap_list_datalinks(p,&t));
