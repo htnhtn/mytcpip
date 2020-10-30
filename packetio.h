@@ -41,3 +41,11 @@ typedef int (*frameReceiveCallback)(const void*, int, int);
  * @see frameReceiveCallback
  */
 int setFrameReceiveCallback(frameReceiveCallback callback);
+
+/**
+ * @brief Start capture.
+ * @notice Will NOT return !
+ */
+void start();
+
+//start(time)

@@ -9,7 +9,7 @@ struct DEVICES{
 	pcap_t*p;
 	char name[100];
 	unsigned int addr,mask;
-	u_char mac[6];
+	char mac[6];
 };
 
 extern std::vector<DEVICES>devices;
