@@ -73,7 +73,7 @@ int setFrameReceiveCallback(frameReceiveCallback callback)
 void start()
 {
 #ifdef WIN32
-	HANDLE*h=(HANDLE*)malloc(devices.size()*sizeof(HANDLE));
+	HANDLE h[100];
 	for(int i=0;i<devices.size();i++)
 		h[i]=CreateThread(NULL,0,ThreadProc1,(LPVOID)i,0,NULL);
 
@@ -85,9 +85,9 @@ void start()
 	CloseHandle( hSemp1 );
 #else
 	sem_init(&mutex,0,1);
-	pthread_t tid=(pthread_t*)malloc(devices.size()*sizeof(pthread_tid));
+	pthread_t tid[100];
 	for(int i=0;i<devices.size();i++)
-		tid[i]=pthread_create(tid+i,NULL,thread,(void*)i);
+		pthread_create(tid+i,NULL,thread,(void*)i);
 
 	for(int i=0;i<devices.size();i++)
 		pthread_join(tid[i]);
