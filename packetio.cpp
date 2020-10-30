@@ -4,6 +4,8 @@
 #include<windows.h>
 HANDLE hSemp1 = CreateSemaphore(NULL,1,1,NULL);
 #else
+#include<cstring>
+#include<malloc.h>
 #include<pthread.h>
 #include<semaphore.h>
 sem_t mutex;
@@ -13,7 +15,7 @@ static frameReceiveCallback handle;
 
 static void packet_handler(u_char*id,const pcap_pkthdr*header,const u_char*pkt_data)
 {
-	if(((frameReceiveCallback)handle)(pkt_data+14,header->len,(int)id))
+	if(((frameReceiveCallback)handle)(pkt_data+14,header->len,(int)(intstr_t)id))
 		puts("callback error");
 #ifdef WIN32
 	WaitForSingleObject(hSemp1, INFINITE);
@@ -56,7 +58,7 @@ DWORD WINAPI ThreadProc1(__in  LPVOID lpParameter)
 void*thread(void*id)
 {
 	pcap_loop(
-		devices[(int)id].p,
+		devices[(int)(intstr_p)id].p,
 		0,
 		packet_handler,
 		(u_char*)id);
@@ -90,7 +92,7 @@ void start()
 		pthread_create(tid+i,NULL,thread,(void*)i);
 
 	for(int i=0;i<devices.size();i++)
-		pthread_join(tid[i]);
+		pthread_join(tid[i],NULL);
 #endif
 }
 
